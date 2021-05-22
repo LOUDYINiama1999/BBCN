@@ -9,3 +9,5 @@ public interface PokeApi {
     @GET("/api/v2/pokemon")
     Call<RestPokemonResponse> getPokemonResponse();
 }
+
+// cette classe sert à rien dans le code //
