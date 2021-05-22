@@ -1,6 +1,6 @@
 package com.example.projetmobile.data;
 
-import com.example.projetmobile.ApiModel.Headlines;
+import com.example.projetmobile.presentation.model.Headlines;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

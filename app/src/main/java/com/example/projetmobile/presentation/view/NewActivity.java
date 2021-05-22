@@ -4,16 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.projetmobile.ApiModel.Articles;
-import com.example.projetmobile.ApiModel.Headlines;
+import com.example.projetmobile.Constants;
+import com.example.projetmobile.presentation.model.Articles;
+import com.example.projetmobile.presentation.model.Headlines;
 import com.example.projetmobile.R;
-import com.example.projetmobile.data.News;
 import com.example.projetmobile.presentation.controller.Client;
+import com.example.projetmobile.presentation.controller.ListNewsAdapter;
+import com.example.projetmobile.presentation.model.Pokemon;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +42,10 @@ public class NewActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         newsRecyclerViews = findViewById(R.id.rcView_news);
         newsRecyclerViews.setLayoutManager(new LinearLayoutManager(getApplicationContext(),RecyclerView.VERTICAL,false));
-        retrieveJson(country,category,API_KEY);
+        CallApi(country,category,API_KEY);
 
     }
-    public  void retrieveJson(String country,String categori,String apiKey)
+    public  void CallApi(String country,String categori,String apiKey)
     {
         Call<Headlines> call= Client.getInstance().getApi().getHeadlines(country,categori,apiKey);
         call.enqueue(new Callback<Headlines>() {
@@ -51,6 +54,7 @@ public class NewActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body().getArticles()!=null){
                     articles.clear();
                     articles=response.body().getArticles();
+
                      newsAdapter = new ListNewsAdapter(articles,NewActivity.this);
                     newsRecyclerViews.setAdapter(newsAdapter);
                 }
@@ -63,4 +67,26 @@ public class NewActivity extends AppCompatActivity {
             }
         });
     }
+  /*  private void saveList(List<Articles> pokemonList) {
+        String jsonString = gson.toJson(pokemonList);
+
+        sharedPreferences
+                .edit()
+                .putString(Constants.KE_POKEMON_LIST, jsonString)
+                .apply();
+    }*/
+
+
+
+  /*  private List<Pokemon> getDataFromCache() {
+        String jsonPokemon = sharedPreferences.getString(Constants.KE_POKEMON_LIST, null);
+
+        if(jsonPokemon == null){
+            return null;
+        } else {
+            Type listType = new TypeToken<ArrayList<Pokemon>>() {}.getType();
+            return gson.fromJson(jsonPokemon, listType);
+        }
+    }*/
+
 }

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.projetmobile.R;
 import com.example.projetmobile.Singletons;
+import com.example.projetmobile.presentation.controller.ListAdapter;
 import com.example.projetmobile.presentation.model.Pokemon;
 import com.example.projetmobile.presentation.controller.MainController;
 
