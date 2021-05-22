@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/red"
+    tools:context=".presentation.view.NewActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcView_news"
+        android:layout_width="406dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="100dp"
+
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="147dp"
+        tools:listitem="@layout/items_news" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="217dp"
+        android:layout_height="26dp"
+        android:layout_marginLeft="90dp"
+        android:layout_marginTop="35dp"
+
+        android:gravity="center"
+        android:text="Nouvelle Actuallité"
+        android:textAllCaps="false"
+        android:textColor="#ECEEFA"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="97dp"
+        tools:layout_editor_absoluteY="54dp" />
+
+</RelativeLayout>
