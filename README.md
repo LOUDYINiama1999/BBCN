@@ -1,9 +1,9 @@
-## BBCN:
+# BBCN:
 
 Venez consulter les dernières actualitées du moment !
 BBCN est une application développer en Java, afin de permettre aux utilisateurs de découvrire des événements pertinents grace à son interface simplifiée.
 
-# Quelques fonctionnalités utilisées:  
+## Quelques fonctionnalités utilisées:  
 
 - Afficher une liste avec RecyclerView.
 
@@ -23,4 +23,4 @@ BBCN est une application développer en Java, afin de permettre aux utilisateurs
 
 - Design simple et adéquat ^^ .
 
-
+<a href="image/image1.jpg"><img src="image/image1.jpg" width="200" /><a>
