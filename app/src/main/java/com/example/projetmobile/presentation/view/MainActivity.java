@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.example.projetmobile.R;
 import com.example.projetmobile.Singletons;
 import com.example.projetmobile.presentation.controller.ListAdapter;
+import com.example.projetmobile.presentation.controller.ListNewsAdapter;
+import com.example.projetmobile.presentation.model.Articles;
 import com.example.projetmobile.presentation.model.Pokemon;
 import com.example.projetmobile.presentation.controller.MainController;
 
@@ -19,7 +21,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private ListAdapter mAdapter;
+    private ListNewsAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager ;
 
     private MainController controller;
@@ -29,27 +31,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*controller = new MainController(
+     /* controller = new MainController(
                 this,
                 Singletons.getGson(),
                 Singletons.getSharedPreferencesInstances(getApplicationContext())
-        );
-        controller.onStart();*/
+        );*/
+//        controller.onStart();
         Intent intent = new Intent(this,NewActivity.class);
         this.startActivity(intent);
 
     }
 
-    public void showList(List<Pokemon> pokemonList) {
+    public void showList(List<Articles> articlesList) {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new ListAdapter(pokemonList, new ListAdapter.OnItemClickListener() {
+        mAdapter = new ListNewsAdapter(articlesList, new ListAdapter.OnItemClickListener() {
             @Override
             public void onItemsClick(Pokemon item) {
-                controller.onItemClick(item);
+               // controller.onItemClick(item);
             }
         });
         recyclerView.setAdapter(mAdapter);

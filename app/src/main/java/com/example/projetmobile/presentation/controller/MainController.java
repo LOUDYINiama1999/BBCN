@@ -2,11 +2,16 @@ package com.example.projetmobile.presentation.controller;
 
 import android.content.SharedPreferences;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.projetmobile.Constants;
 import com.example.projetmobile.Singletons;
+import com.example.projetmobile.Client;
+import com.example.projetmobile.presentation.model.Articles;
+import com.example.projetmobile.presentation.model.Headlines;
 import com.example.projetmobile.presentation.model.Pokemon;
 import com.example.projetmobile.presentation.model.RestPokemonResponse;
-import com.example.projetmobile.presentation.view.MainActivity;
+import com.example.projetmobile.presentation.view.NewActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -22,21 +27,29 @@ public class MainController {
 
     private SharedPreferences sharedPreferences;
     private Gson gson;
-    private MainActivity view;
+    private NewActivity view;
+    private String API_KEY="10d0da6b81274c03b352f1d420b54783";
+    RecyclerView newsRecyclerViews;
+    final String country="fr";
+    final String  category="business";
+    ListNewsAdapter newsAdapter;
 
-    public MainController(MainActivity mainActivity, Gson gson, SharedPreferences sharedPreferences) {
+    List<Articles> articles = new ArrayList<>();
+
+    public MainController(NewActivity mainActivity, Gson gson, SharedPreferences sharedPreferences) {
         this.view = mainActivity;
         this.gson = gson;
         this.sharedPreferences = sharedPreferences;
     }
 
     public void onStart(){
-        List<Pokemon> pokemonList = getDataFromCache();
+        List<Articles> articles = getDataFromCache();
 
-        if(pokemonList != null){
-            view.showList(pokemonList);
+        if(articles != null){
+            view.showList(articles);
         } else {
-            makeApiCall();
+            //makeApiCall();
+            CallApi(country,category,API_KEY);
         }
 
     }
@@ -49,8 +62,8 @@ public class MainController {
             public void onResponse(Call<RestPokemonResponse> call, Response<RestPokemonResponse> response) {
                 if(response.isSuccessful() && response.body() != null){
                     List<Pokemon> pokemonList = response.body().getResults();
-                    saveList(pokemonList);
-                    view.showList(pokemonList);
+                    /*saveList(pokemonList);
+                    view.showList(pokemonList);*/
                 } else {
                     view.showError();
                 }
@@ -63,31 +76,50 @@ public class MainController {
         });
     }
 
-    private void saveList(List<Pokemon> pokemonList) {
-        String jsonString = gson.toJson(pokemonList);
+    private void saveList(List<Articles> articles) {
+        String jsonString = gson.toJson(articles);
 
         sharedPreferences
                 .edit()
-                .putString(Constants.KE_POKEMON_LIST, jsonString)
+                .putString(Constants.NEW_LIST, jsonString)
                 .apply();
     }
 
+    public  void CallApi(String country,String categori,String apiKey)
+    {
+        Call<Headlines> call= Client.getInstance().getApi().getHeadlines(country,categori,apiKey);
+        call.enqueue(new Callback<Headlines>() {
+            @Override
+            public void onResponse(Call<Headlines> call, Response<Headlines> response) {
+                if (response.isSuccessful() && response.body().getArticles()!=null){
+                    articles.clear();
+                    articles=response.body().getArticles();
 
+                    saveList(articles);
+                    view.showList(articles);;
+                }else {
+                    view.showError();
+                }
+            }
 
-    private List<Pokemon> getDataFromCache() {
-        String jsonPokemon = sharedPreferences.getString(Constants.KE_POKEMON_LIST, null);
+            @Override
+            public void onFailure(Call<Headlines> call, Throwable t) {
 
-        if(jsonPokemon == null){
+                view.showError();
+            }
+        });
+    }
+
+    private List<Articles> getDataFromCache() {
+        String jsonNews = sharedPreferences.getString(Constants.NEW_LIST, null);
+
+        if(jsonNews == null){
             return null;
         } else {
-            Type listType = new TypeToken<ArrayList<Pokemon>>() {}.getType();
-            return gson.fromJson(jsonPokemon, listType);
+            Type listType = new TypeToken<ArrayList<Articles>>() {}.getType();
+            return gson.fromJson(jsonNews, listType);
         }
     }
 
-    public void onItemClick(Pokemon pokemon){
-        view.navigaTeDetails(pokemon);
-
-    }
     
 }

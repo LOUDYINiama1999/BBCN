@@ -58,7 +58,7 @@
         android:gravity="center"
         android:text="Example application"
         android:textAlignment="viewStart"
-        android:textColor="#2D302E"
+        android:textColor="@color/nounou"
         android:textSize="16sp"
         android:textStyle="bold" />
 </RelativeLayout>

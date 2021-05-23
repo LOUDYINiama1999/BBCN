@@ -7,16 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.projetmobile.Constants;
+import com.example.projetmobile.Singletons;
+import com.example.projetmobile.presentation.controller.MainController;
 import com.example.projetmobile.presentation.model.Articles;
 import com.example.projetmobile.presentation.model.Headlines;
 import com.example.projetmobile.R;
-import com.example.projetmobile.presentation.controller.Client;
+import com.example.projetmobile.Client;
 import com.example.projetmobile.presentation.controller.ListNewsAdapter;
-import com.example.projetmobile.presentation.model.Pokemon;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +29,7 @@ public class NewActivity extends AppCompatActivity {
     final String country="fr";
     final String  category="business";
     ListNewsAdapter newsAdapter;
+    private MainController controller;
 
     List<Articles> articles = new ArrayList<>();
     private String cat="news";
@@ -42,7 +41,13 @@ public class NewActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         newsRecyclerViews = findViewById(R.id.rcView_news);
         newsRecyclerViews.setLayoutManager(new LinearLayoutManager(getApplicationContext(),RecyclerView.VERTICAL,false));
-        CallApi(country,category,API_KEY);
+        controller = new MainController(
+                this,
+                Singletons.getGson(),
+                Singletons.getSharedPreferencesInstances(getApplicationContext())
+        );
+        controller.onStart();
+//        CallApi(country,category,API_KEY);
 
     }
     public  void CallApi(String country,String categori,String apiKey)
@@ -67,26 +72,20 @@ public class NewActivity extends AppCompatActivity {
             }
         });
     }
-  /*  private void saveList(List<Articles> pokemonList) {
-        String jsonString = gson.toJson(pokemonList);
-
-        sharedPreferences
-                .edit()
-                .putString(Constants.KE_POKEMON_LIST, jsonString)
-                .apply();
-    }*/
 
 
 
-  /*  private List<Pokemon> getDataFromCache() {
-        String jsonPokemon = sharedPreferences.getString(Constants.KE_POKEMON_LIST, null);
 
-        if(jsonPokemon == null){
-            return null;
-        } else {
-            Type listType = new TypeToken<ArrayList<Pokemon>>() {}.getType();
-            return gson.fromJson(jsonPokemon, listType);
-        }
-    }*/
+
+    public void showList(List<Articles> articlesList) {
+
+        newsAdapter = new ListNewsAdapter(articlesList,NewActivity.this);
+        newsRecyclerViews.setAdapter(newsAdapter);
+    }
+
+    public void showError() {
+        Toast.makeText(getApplicationContext(),"API Error", Toast.LENGTH_SHORT).show();
+    }
+
 
 }
