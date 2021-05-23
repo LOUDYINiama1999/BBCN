@@ -11,6 +11,8 @@ BBCN est une application développer en Java, afin de permettre aux utilisateurs
 
 - Icon de l'app.
 
+<a href="image/logobbc.PNG"><img src="image/logobbc.PNG" width="280" /><a>
+
 - Implémentation d'une API Rest (de News).
 
 - Splash screen.
