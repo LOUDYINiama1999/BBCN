@@ -1,6 +1,6 @@
 # BBCN:
 
-Venez consulter les dernières actualitées du moment !
+Venez consulter les dernières actualitées financieres du moment !
 BBCN est une application développer en Java, afin de permettre aux utilisateurs de découvrire des événements pertinents grace à son interface simplifiée.
 
 ## Quelques fonctionnalités utilisées:  
