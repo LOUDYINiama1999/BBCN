@@ -23,4 +23,4 @@ BBCN est une application développer en Java, afin de permettre aux utilisateurs
 
 - Design simple et adéquat ^^ .
 
-<a href="image/bbcfirstpage.png"><img src="image/bbcfirstpage.png" width="280" /><a>
+<a href="image/bbcfirstpage.PNG"><img src="image/bbcfirstpage.PNG" width="280" /><a>
