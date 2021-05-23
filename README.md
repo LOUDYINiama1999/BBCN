@@ -9,6 +9,10 @@ BBCN est une application développer en Java, afin de permettre aux utilisateurs
 
 - Afficher les détails des éléments de la liste.
 
+- Stockage de données en cache.
+
+- Singletons.
+
 - Icon de l'app.
 
 <a href="image/logobbc.PNG"><img src="image/logobbc.PNG" width="150" /><a>
